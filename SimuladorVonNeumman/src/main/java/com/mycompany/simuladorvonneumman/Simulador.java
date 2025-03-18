@@ -7,6 +7,8 @@ package com.mycompany.simuladorvonneumman;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import javax.swing.Timer;
+import java.awt.Color;
 
 public class Simulador extends javax.swing.JFrame {
     private int step = 0; // Contador de pasos
@@ -307,34 +309,49 @@ public class Simulador extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void resaltarCampo(JTextField campo) {
+        Color originalColor = campo.getBackground(); 
+        campo.setBackground(Color.YELLOW); 
+
+        Timer timer = new Timer(500, e -> campo.setBackground(originalColor));
+        timer.setRepeats(false);
+        timer.start();
+    }
+    
     private void avanzarEstado() {
+         JTextField campoResaltar = null; // Variable para guardar el campo a resaltar
+
         switch (step) {
-            case 0: contPrograma.setText("0001"); break;
-            case 1: rDatos.setText("00000100"); break;
-            case 2: rInstrucciones.setText("00000100"); break;
+            case 0: campoResaltar = contPrograma; contPrograma.setText("0001"); break;
+            case 1: campoResaltar = rDatos; rDatos.setText("00000100"); break;
+            case 2: campoResaltar = rInstrucciones; rInstrucciones.setText("00000100"); break;
             case 3: decodificador.setText("+"); break;
-            case 4: rDirecciones.setText("0100"); break;
-            case 5: rInstrucciones.setText("00000101"); break;
-            case 6: rEntrada.setText("00000101"); break;
-            case 7: acumulador.setText("00000101"); break;
-            case 8: contPrograma.setText("0010"); break;
-            case 9: rDirecciones.setText("0101"); break;
-            case 10: rDatos.setText("00001011"); break;
-            case 11: rEntrada.setText("00001011"); break;
-            case 12: acumulador.setText("00010000"); break;
-            case 13: rDirecciones.setText("0010"); break;
-            case 14: contPrograma.setText("0011"); break;
-            case 15: rDatos.setText("01100111"); break;
-            case 16: rInstrucciones.setText("01100111"); break;
-            case 17: decodificador.setText("M"); break;
-            case 18: rDirecciones.setText("0111"); break;
-            case 19: rDatos.setText("00010000"); break;
-            case 20: rDirecciones.setText("0011"); break;
-            case 21: contPrograma.setText("0100"); break;
-            case 22: rDatos.setText("01110000"); break;
-            case 23: rInstrucciones.setText("01110000"); break;
-            case 24: decodificador.setText("STOP"); break;
+            case 4: campoResaltar = rDirecciones; rDirecciones.setText("0100"); break;
+            case 5: campoResaltar = rInstrucciones; rInstrucciones.setText("00000101"); break;
+            case 6: campoResaltar = rEntrada; rEntrada.setText("00000101"); break;
+            case 7: campoResaltar = acumulador; acumulador.setText("00000101"); break;
+            case 8: campoResaltar = contPrograma; contPrograma.setText("0010"); break;
+            case 9: campoResaltar = rDirecciones; rDirecciones.setText("0101"); break;
+            case 10: campoResaltar = rDatos; rDatos.setText("00001011"); break;
+            case 11: campoResaltar = rEntrada; rEntrada.setText("00001011"); break;
+            case 12: campoResaltar = acumulador; acumulador.setText("00010000"); break;
+            case 13: campoResaltar = rDirecciones; rDirecciones.setText("0010"); break;
+            case 14: campoResaltar = contPrograma; contPrograma.setText("0011"); break;
+            case 15: campoResaltar = rDatos; rDatos.setText("01100111"); break;
+            case 16: campoResaltar = rInstrucciones; rInstrucciones.setText("01100111"); break;
+            case 17:  decodificador.setText("M"); break;
+            case 18: campoResaltar = rDirecciones; rDirecciones.setText("0111"); break;
+            case 19: campoResaltar = rDatos; rDatos.setText("00010000"); break;
+            case 20: campoResaltar = rDirecciones; rDirecciones.setText("0011"); break;
+            case 21: campoResaltar = contPrograma; contPrograma.setText("0100"); break;
+            case 22: campoResaltar = rDatos; rDatos.setText("01110000"); break;
+            case 23: campoResaltar = rInstrucciones; rInstrucciones.setText("01110000"); break;
+            case 24:  decodificador.setText("STOP"); break;
             default: JOptionPane.showMessageDialog(null, "Secuencia completada"); return;
+        }
+
+        if (campoResaltar != null) {
+            resaltarCampo(campoResaltar);
         }
         step++;
     }
